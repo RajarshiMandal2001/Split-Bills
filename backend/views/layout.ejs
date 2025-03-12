@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Splitwise Clone</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+</head>
+<body>
+    <nav class="navbar">
+      <% if (session.user) { %>
+        <div class="nav-top">
+          <span style="color: #6E260E; font-weight: bold; margin-right: 10px;">Welcome, <%= session.user.name %></span> |
+          <a href="/user/logout">Logout</a>
+        </div>
+        <div class="nav-bottom">
+          <a href="/expense">Home</a> |
+          <a href="/expense/balance">View Balance</a> |
+          <a href="/expense/add-expense">Add Expense</a> 
+        </div>
+      <% } else { %>
+        <h2>Welcome to SplutWese!</h2>
+        <h1>Login or Sign Up fro FREE and streamline your expense tracking 🚀</h1>
+      <% } %>
+    </nav>      
+    
+    <!-- <div class="container">
+    </div> -->
+</body>
+</html>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const currentUrl = new URL(window.location.href);
+    const links = document.querySelectorAll('.nav-bottom a');
+
+    links.forEach(link => {
+      const linkUrl = new URL(link.href, window.location.origin);
+      if (linkUrl.pathname === currentUrl.pathname) {
+        link.classList.add('active');
+      }
+    });
+  });
+</script>
+

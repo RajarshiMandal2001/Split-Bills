@@ -1,0 +1,25 @@
+<%- include('layout') %>
+
+<h2>Check what you need to pay!</h2>
+<div class="table-container">
+  <table class="balance-table">
+    <tr>
+      <th>Name</th>
+      <th>Balance (in Rupees)</th>
+    </tr>
+    <% balances.forEach(user => { %>
+      <tr>
+        <td><%= user.name %></td>
+        <td>
+          <% if (user.balance < 0) { %>
+            <span style="color: red">Owes</span> <%= Math.abs(user.balance) %>
+          <% } else if (user.balance > 0) { %>
+            <span style="color: green; margin-right: 7px;">Gets</span> <%= user.balance %>
+          <% } else { %>
+            <span style="color: blue;">No Dues</span>
+          <% } %>
+        </td>
+      </tr>
+    <% }) %>
+  </table>
+</div>

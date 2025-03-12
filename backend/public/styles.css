@@ -1,0 +1,184 @@
+/* General Styles */
+body {
+    font-family: Arial;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 35%;
+    margin: 15px auto;
+    background: white;
+    padding: 2px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #6E260E;
+    text-align: center;
+}
+
+.navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgb(34,139,34);
+    background: linear-gradient(159deg, rgba(34,139,34,1) 0%, rgba(50,205,50,1) 100%);
+    width: 100%;
+}
+
+.nav-top {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.nav-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 4px;
+}
+
+.nav-bottom a {
+    margin: 0 10px;
+}
+
+.nav-bottom a.active {
+    text-decoration: underline;
+}
+  
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+  
+/* Button Styles */
+button {
+    background-color: #6E260E;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #b85230;
+}
+
+/* Message Styling */
+p {
+    text-align: center;
+    font-size: 18px;
+    color: #555;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 300px;
+    margin: auto;
+}
+
+input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.table-container {
+    height: 65vh;
+    overflow-y: auto;
+    overflow-x: auto; 
+}
+  /* Style for the balance table */
+.balance-table {
+    width: 80%;
+    margin: auto;
+    /* border-collapse: collapse; */
+    border-radius: 15px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    /* overflow: hidden; */
+}
+
+/* Style for table headers */
+.balance-table tr:first-child {
+    color: white;
+    position: sticky;
+    top: 0;
+    background-color: white; 
+    z-index: 2;
+}
+
+/* Style for table headers */
+.balance-table th {
+    background: rgb(34,139,34);
+    background: linear-gradient(159deg, rgba(34,139,34,1) 0%, rgba(50,205,50,1) 100%);
+    padding: 10px;
+    text-align: left;
+}
+
+/* Style for the first column */
+.balance-table th:first-child, .balance-table td:first-child {
+    position: sticky;
+    left: 0;
+    background-color: white;
+    z-index: 1; /* Ensure it stays on top of other columns */
+}
+
+/* Style for table rows */
+.balance-table tr:nth-child(even) {
+    background-color: #f9f9f9; /* Lighter shade for even rows */
+}
+
+.balance-table tr:nth-child(odd) {
+    background-color: #e5e5e5; /* Darker shade for odd rows */
+}
+
+/* Style for table data cells */
+.balance-table td {
+    padding: 10px;
+    text-align: left;
+}
+  
+/* Optional: Add some hover effect for rows */
+.balance-table tr:hover {
+    background-color: #ddd; /* Hover effect */
+}
+  
+.checkbox-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.checkbox-item {
+    margin: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-item input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+/* To ensure at most 3 columns */
+.checkbox-item {
+    flex-basis: calc(33.33% - 20px); /* Adjust for margins */
+}
+  
+  
+  

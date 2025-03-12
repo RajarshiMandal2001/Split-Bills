@@ -1,0 +1,75 @@
+<%- include('layout') %>
+
+<div class="container">
+
+  <h2>Add New Expense</h2>
+  <form id="expenseForm" action="/expense/add-expense" method="POST">
+    <label>Description:</label>
+    <input type="text" name="description" required>
+  
+    <label style="margin-top: 6px;">Amount (in Rs.):</label>
+    <input type="number" name="amount" min="1" required oninput="validity.valid || (value='');">
+  
+    <label style="margin-top: 6px;">Paid By:</label>
+    <select name="paidBy" style="padding: 6px; border-radius: 6px;">
+      <% users.forEach(user => { %>
+        <option style="padding: 4px" value="<%= user._id %>"><%= user.name %></option>
+      <% }) %>
+    </select>
+  
+    <label style="margin-top: 6px;">Split Among:</label>
+    <div class="checkbox-container">
+  
+      <label class="checkbox-item">
+        <input style="cursor: pointer;" type="checkbox" id="selectAll"> All
+      </label>
+  
+      <% users.forEach(user => { %>
+        <label class="checkbox-item">
+          <input style="cursor: pointer;" class="split-checkbox" type="checkbox" name="splitAmong" value="<%= user._id %>"> <%= user.name %>
+        </label>
+      <% }) %>
+    </div>
+  
+  
+    <button style="margin-bottom: 6px;" id="expenseButton" type="submit">Add Expense</button>
+  </form>
+</div>
+
+<script>
+
+  // check validity on submit
+  document.getElementById('expenseForm').addEventListener('submit', function(event) {
+    const checkboxes = document.querySelectorAll('input[name="splitAmong"]');
+    const atLeastOneChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+
+    if (!atLeastOneChecked) {
+      event.preventDefault();
+      alert('Please select at least one user to split with.');
+      return;
+    }
+
+    const loginButton = document.getElementById('expenseButton');
+    loginButton.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Adding...';
+    loginButton.disabled = true;
+  });
+
+    // Event listeners for individual checkboxes
+    document.querySelectorAll('.split-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+          if (!this.checked) {
+            document.getElementById('selectAll').checked = false;
+          }
+        });
+      });
+
+      // check all checkboxes if user selects 'All'
+    document.getElementById('selectAll').addEventListener('change', function() {
+      const checkboxes = document.querySelectorAll('.split-checkbox');
+      const isChecked = this.checked;
+
+      checkboxes.forEach(checkbox => {
+        checkbox.checked = isChecked;
+      });
+    });
+</script>

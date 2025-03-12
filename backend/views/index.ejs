@@ -1,0 +1,27 @@
+<%- include('layout') %>
+
+<h2>All Expenses</h2>
+<div class="table-container">
+  <% if (expenses.length > 0) { %> 
+    <table class="balance-table">
+      <tr>
+        <th>Description</th>
+        <th>Amount (in Rupees)</th>
+        <th>Paid By</th>
+        <th>Split Among</th>
+        <th>Added On</th>
+      </tr>
+      <% expenses.forEach(expense => { %>
+        <tr>
+          <td style="font-weight: bold;"><%= expense.description %></td>
+          <td><%= expense.amount %></td>
+          <td><%= expense.paidBy?.name %></td>
+          <td><%= expense.splitAmong?.map(user => user.name).join(', ') %></td>
+          <td><%= new Date(expense.createdAt).toLocaleString() %></td>
+        </tr>
+      <% }) %>
+    </table>
+  <% } else { %>
+    <p>No expenses added yet. Click <a href="/add-expense">here</a> to add one!</p>
+  <% } %>
+</div>
