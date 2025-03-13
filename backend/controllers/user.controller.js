@@ -15,10 +15,13 @@ export const showRegister = (req, res) => {
 export const registerUser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
-        const existingUser = await User.findOne({ email });
+        const existingUser = await User.findOne({ $or: [
+            { name: name },
+            { email: email },
+        ] });
 
         if (existingUser) {
-            return res.render('register', { error: 'User already exists. Try a different email.' });
+            return res.render('register', { error: 'User with same name or email exists. Try a different name or email.' });
         }
 
         const hashedPassword = await bcrypt.hash(password, 2);

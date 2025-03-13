@@ -1,25 +1,31 @@
 <%- include('layout') %>
 
 <h2>Check what you need to pay!</h2>
+<h2>
+  <% if (loggedInUserBalance >= 0) { %>
+    <span  style="color: black;">You owe Rs.</span>  <span style="color: green"><%= loggedInUserBalance %></span>
+  <% } else { %>
+    <span  style="color: black">You have to pay Rs.</span> <span style="color: red"><%= Math.abs(loggedInUserBalance) %></span>
+  <% } %>
+</h2>
+
 <div class="table-container">
-  <table class="balance-table">
-    <tr>
-      <th>Name</th>
-      <th>Balance (in Rupees)</th>
-    </tr>
-    <% balances.forEach(user => { %>
+  <% if (transactions.length > 0) { %>
+    <table class="balance-table">
       <tr>
-        <td><%= user.name %></td>
-        <td>
-          <% if (user.balance < 0) { %>
-            <span style="color: red">Owes</span> <%= Math.abs(user.balance) %>
-          <% } else if (user.balance > 0) { %>
-            <span style="color: green; margin-right: 7px;">Gets</span> <%= user.balance %>
-          <% } else { %>
-            <span style="color: blue;">No Dues</span>
-          <% } %>
-        </td>
+        <th>Payer</th>
+        <th>Receiver</th>
+        <th>Amount (in Rupees)</th>
       </tr>
-    <% }) %>
-  </table>
+      <% transactions.forEach(t => { %>
+        <tr>
+          <td><%= users.find((user) => user.email === t.from).name %></td>
+          <td><%= users.find((user) => user.email === t.to).name %></td>
+          <td><%= t.amount %></td>
+        </tr>
+      <% }) %>
+    </table>
+  <% } else { %>
+    <p>All balances are settled.</p>
+  <% } %>
 </div>
