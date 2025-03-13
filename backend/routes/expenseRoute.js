@@ -1,6 +1,6 @@
 import express from 'express';
 import { isAuthenticated } from '../middleware/isUserAuthenticated.js';
-import { addExpense, getAllBalence, getAllExpense, showAddExpense } from '../controllers/expense.controller.js';
+import { addExpense, getAllBalence, getAllExpense, showAddExpense, settleExpense } from '../controllers/expense.controller.js';
 
 const router = express.Router();
 
@@ -19,5 +19,9 @@ router.route("/add-expense").get(isAuthenticated, showAddExpense);
 // handle add expense
 // @POST
 router.route("/add-expense").post(isAuthenticated, addExpense);
+
+// handle add expense
+// @POST
+router.route("/settle").post(isAuthenticated, settleExpense);
 
 export default router;

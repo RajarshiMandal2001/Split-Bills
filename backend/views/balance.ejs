@@ -2,10 +2,10 @@
 
 <h2>Check what you need to pay!</h2>
 <h2>
-  <% if (loggedInUserBalance >= 0) { %>
-    <span  style="color: black;">You owe Rs.</span>  <span style="color: green"><%= loggedInUserBalance %></span>
+  <% if (loggedInUserInfo.amount >= 0) { %>
+    <span  style="color: black;">You owe Rs.</span>  <span style="color: green"><%= loggedInUserInfo.amount %></span>
   <% } else { %>
-    <span  style="color: black">You have to pay Rs.</span> <span style="color: red"><%= Math.abs(loggedInUserBalance) %></span>
+    <span  style="color: black">You have to pay Rs.</span> <span style="color: red"><%= Math.abs(loggedInUserInfo.amount) %></span>
   <% } %>
 </h2>
 
@@ -16,12 +16,23 @@
         <th>Payer</th>
         <th>Receiver</th>
         <th>Amount (in Rupees)</th>
+        <th>Action</th>
       </tr>
       <% transactions.forEach(t => { %>
         <tr>
           <td><%= users.find((user) => user.email === t.from).name %></td>
           <td><%= users.find((user) => user.email === t.to).name %></td>
-          <td><%= t.amount %></td>
+          <td style="font-weight: bold;"><%= t.amount %></td>
+          <td>
+            <form action="/expense/settle" method="POST">
+              <input type="hidden" name="fromEmail" value="<%= t.from %>">
+              <input type="hidden" name="toEmail" value="<%= t.to %>">
+              <input type="hidden" name="amount" value="<%= t.amount %>">
+              <button type="submit" class="btn btn-success" <% if (t.from !== loggedInUserInfo.email) { %> disabled <% } %> >
+                Settle Up
+              </button>
+            </form>
+          </td>
         </tr>
       <% }) %>
     </table>

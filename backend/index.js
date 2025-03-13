@@ -34,5 +34,5 @@ app.use('/expense', expenseRoute)
 
 app.listen(PORT, ()=>{
     connectDB();
-    console.log(`Server listen at prot ${PORT}`);
+    console.log(`Server started at port ${PORT}`);
 });

@@ -46,8 +46,6 @@ export const getAllBalence = async (req, res) => {
 
   let balances = {};
 
-  // users.forEach(user => balances[user._id] = { name: user.name, balance: 0 });
-
   expenses.forEach(expense => {
     const perPersonShare = expense.amount / expense.splitAmong.length;
 
@@ -73,12 +71,41 @@ export const getAllBalence = async (req, res) => {
     }
   });
 
-  console.log("balance:", balances)
   const loggedInUserBalance = balances[req.session.user.email];
   let transactions = settleBalances(balances);
-  res.render('balance', { transactions, users, loggedInUserBalance });
-  // res.render('balance', { balances: Object.values(balances) });
+  res.render('balance', { transactions, users, loggedInUserInfo: { email: req.session.user.email, amount: loggedInUserBalance } });
 };
+
+// Settle amount between two users
+export const settleExpense = async (req, res) => {
+  try {
+    const { fromEmail, toEmail, amount } = req.body;
+    console.log(fromEmail, toEmail, amount)
+
+    // Fetch user objects from email
+    const fromUser = await User.findOne({ email: fromEmail });
+    const toUser = await User.findOne({ email: toEmail });
+
+    if (!fromUser || !toUser) {
+      return res.status(400).send('Invalid users');
+    }
+
+    // Create a new expense entry as a settlement
+    const settlement = new Expense({
+      description: `${fromUser.name} settled with ${toUser.name} for Rs. ${amount}`,
+      amount,
+      paidBy: fromUser._id,
+      splitAmong: [toUser._id]
+    });
+
+    await settlement.save();
+
+    res.redirect('/expense/balance'); // Refresh balance page
+  } catch (err) {
+    res.status(500).send('Error processing settlement');
+  }
+};
+
 
 
 // utility function to convert balance to transaction
