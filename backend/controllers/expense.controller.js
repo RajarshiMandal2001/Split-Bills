@@ -73,14 +73,13 @@ export const getAllBalence = async (req, res) => {
 
   const loggedInUserBalance = balances[req.session.user.email];
   let transactions = settleBalances(balances);
-  res.render('balance', { transactions, users, loggedInUserInfo: { email: req.session.user.email, amount: loggedInUserBalance } });
+  res.render('balance', { transactions, users, loggedInUserInfo: { email: req.session.user.email, amount: loggedInUserBalance || 0 } });
 };
 
 // Settle amount between two users
 export const settleExpense = async (req, res) => {
   try {
     const { fromEmail, toEmail, amount } = req.body;
-    console.log(fromEmail, toEmail, amount)
 
     // Fetch user objects from email
     const fromUser = await User.findOne({ email: fromEmail });

@@ -1,7 +1,6 @@
 import { User } from "../models/userModel.js";
 import bcrypt from 'bcryptjs';
 
-
 /**
  * Registration methods
  */
@@ -55,14 +54,15 @@ export const loginUser = async (req, res) => {
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-        return res.render('login', { error: 'Invalid email or password' });
+            return res.render('login', { error: 'Invalid email or password' });
         }
 
         // Store user in session
         req.session.user = { id: user._id, name: user.name, email: user.email };
         res.redirect('/expense');
+
     } catch (err) {
-        res.status(500).send('Error logging in');
+        res.status(500).send('Error logging in:', err);
     }
 };
 
